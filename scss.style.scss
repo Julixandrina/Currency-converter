@@ -4,11 +4,13 @@ body {
   color: #232222;
   background-color: #b6b6e4;
   .container {
-    width: 500px;
-    height: 500px;
+    max-width: 500px;
+
+
     background-color: #6540ca;
     border-radius: 5px;
     padding: 20px;
+
     .container-converter-inputs {
       display: flex;
       flex-direction: column;
@@ -24,6 +26,7 @@ body {
         }
         .input-form {
           width: 100%;
+
           font-size: 16px;
           max-width: 100%;
           padding: 10px;
@@ -38,5 +41,10 @@ body {
       }
     }
 
+  }
+}
+@media (min-width: 540px) {
+  body .container {
+   width: 100%;
   }
 }

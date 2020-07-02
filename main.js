@@ -1,53 +1,86 @@
 'use strict';
 
+document.addEventListener("DOMContentLoaded", onPageLoaded);
 
-let exchangeRateUSD = 2.4243;
-let exchangeRateEUR = 1.1231;
-let exchangeRateBYN = 2.4243;
-let inputInitialForm = document.querySelectorAll('.input-form');
-for (let input of inputInitialForm) {
-    input.addEventListener('input', function (event) {
-        let target = event.target
-        let inputID = target.id;
-        switch (inputID) {
-            case 'nbrb_usd':
-                let inputValueUSD = event.target.value;
-                convertUSD(target, inputValueUSD);
-                break;
-            case  'nbrb_eur':
-                let inputValueEUR = event.target.value;
-                console.log(event.target.value);
-                break;
-            case  'nbrb_byn':
-                let inputValueBYN = event.target.value;
-                console.log(event.target.value);
-                break;
+const MAIN_CUR = 'byn';
+
+const rates = {
+    'usd': 0,
+    'eur': 0,
+    'aud': 0
+};
+
+
+function onPageLoaded() {
+    let ratesURL = 'https://ibapi.alfabank.by:8273/partner/1.0.1/public/nationalRates';
+    fetch(ratesURL)
+        .then((response) => response.json())
+        .then(function (responseObject) {
+            responseObject.rates.forEach(function (item) {
+                let currencyCode = item.iso.toLowerCase();
+                let currencyRate = item.rate;
+
+                if (currencyCode in rates) {
+                    rates[currencyCode] = currencyRate;
+
+                }
+
+            });
+
+            onReady();
+
+        });
+}
+
+function onReady() {
+
+    let containerInputs = document.querySelector('.container-converter-inputs');
+    containerInputs.addEventListener('input', function (event) {
+        let target = event.target;
+        if(target.classList.contains('input-form')){
+            let CURRENT_CURRENCY = target.name;//'usd','eur', 'aud', 'byn'
+            let CURRENT_AMOUNT = +target.value;//50
+            let topParent = target.closest('.container-converter-inputs');
+            let inputBYN = topParent.querySelector('#nbrb_byn');
+
+
+            let BYN_VALUE = 0;
+            if (CURRENT_CURRENCY !== MAIN_CUR) {
+                //ЕСЛИ ТЕКУЩАЯ ВАЛЮТА НЕ БЕЛ РУБЛИ
+                BYN_VALUE = CURRENT_AMOUNT * rates[CURRENT_CURRENCY];
+                inputBYN.value = BYN_VALUE.toFixed(2);
+
+            } else {
+                //ЕСЛИ И ТАК ВВЕЛИ БЕЛ РУБЛИ
+                BYN_VALUE = CURRENT_AMOUNT;
+            }
+
+            let inputsArr = document.querySelectorAll('.input-form');
+            for (let input of inputsArr) {
+                if (input.name !== MAIN_CUR && input.name !== CURRENT_CURRENCY) {
+                    let amount = BYN_VALUE / rates[input.name];
+                    input.value = amount.toFixed(2);
+                }
+            }
+
+
+
 
         }
     });
 
-}
-function convertUSD(target,inputValueUSD) {
+    let usdInput = document.getElementById('nbrb_usd');
 
-    let topParent = target.closest('.container-converter-inputs');
-    let inputBYN = topParent.querySelector('#nbrb_byn');
-    let inputEUR = topParent.querySelector('#nbrb_eur');
-
-    let convertUSDInByn = inputValueUSD * exchangeRateBYN;
-    convertUSDInByn = convertUSDInByn.toFixed(2);
-
-    let convertUSDInEUR =
-
-    inputBYN.value = convertUSDInByn;
-
-
-
-
-
+    usdInput.value = 100;
+    let event = new Event('input', {
+        bubbles: true,
+        cancelable: true,
+    });
+    usdInput.dispatchEvent(event);
 
 }
 
-/*
-let containerInput = document.querySelectorAll('.inputs-item');
-console.log(containerInput)
-let inputInitialForm = containerInput.querySelector('.input-form');*/
+
+
+
+
