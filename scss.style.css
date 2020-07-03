@@ -1,0 +1,53 @@
+body {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #232222;
+  background-color: #b6b6e4;
+}
+body .container {
+  max-width: 400px;
+  min-width: 220px;
+  background-color: #6540ca;
+  border-radius: 5px;
+  padding: 20px;
+}
+body .container .container-converter-inputs {
+  display: flex;
+  flex-direction: column;
+}
+body .container .container-converter-inputs .inputs-item {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+body .container .container-converter-inputs .inputs-item .item-currency-title {
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-right: 20px;
+  width: 35px;
+  color: #fff;
+}
+body .container .container-converter-inputs .inputs-item .input-form {
+  font-size: 16px;
+  max-width: 100%;
+  padding: 10px;
+  color: #000;
+  border: 1px solid #b4c6d2;
+  border-radius: 5px;
+  box-sizing: border-box;
+  outline: none;
+  flex-grow: 1;
+}
+body .container .container-converter-inputs .inputs-item .input-form:focus {
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #b6b6e4;
+}
+body .container .dataSync {
+  color: white;
+}
+body .container .fault {
+  color: #c71c1c;
+  font-weight: 600;
+  font-size: 20px;
+  display: none;
+}
+/*# sourceMappingURL=scss.style.css.map */
