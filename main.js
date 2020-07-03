@@ -4,11 +4,9 @@ document.addEventListener("DOMContentLoaded", onPageLoaded);
 
 const MAIN_CUR = 'byn';
 
-const rates = {
-    'usd': 0,
-    'eur': 0,
-    'aud': 0
-};
+const activeRates = [MAIN_CUR, 'usd','eur','pln'];
+
+const rates = {};
 
 
 function onPageLoaded() {
@@ -22,10 +20,10 @@ function onPageLoaded() {
             responseObject.rates.forEach(function (item) {
                 let currencyCode = item.iso.toLowerCase();
                 let currencyRate = item.rate;
+                let currencyQuantity = item.quantity;
 
-                if (currencyCode in rates) {
-                    rates[currencyCode] = currencyRate;
-
+                if (activeRates.indexOf(currencyCode) !== -1) {
+                    rates[currencyCode] = currencyRate / currencyQuantity;
                 }
 
             });
