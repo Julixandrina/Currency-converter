@@ -15,6 +15,9 @@ function onPageLoaded() {
     let ratesURL = 'https://ibapi.alfabank.by:8273/partner/1.0.1/public/nationalRates';
     fetch(ratesURL)
         .then((response) => response.json())
+        .catch(function () {
+            onFail()
+        })
         .then(function (responseObject) {
             responseObject.rates.forEach(function (item) {
                 let currencyCode = item.iso.toLowerCase();
@@ -29,7 +32,23 @@ function onPageLoaded() {
 
             onReady();
 
+        })
+        .catch(function () {
+            onFail()
         });
+}
+
+function onFail() {
+    let fault = document.querySelector('.fault');
+    fault.style.display = 'block';
+
+    let container = document.querySelector('.container');
+    container.style.backgroundColor = '#9d90c1';
+
+    let allInputs = document.querySelectorAll('.input-form');
+    for (let input of allInputs) {
+        input.setAttribute('disabled', 'disabled');
+    }
 }
 
 function onReady() {
@@ -77,6 +96,37 @@ function onReady() {
         cancelable: true,
     });
     usdInput.dispatchEvent(event);
+    showDate();
+function showDate() {
+    let dataDay = document.querySelector('.day');
+    let timeSync = document.querySelector('.timeSync');
+    let now = new Date();
+    let year = now.getFullYear();
+
+    let month = now.getMonth() + 1;
+    if (month < 10) {
+        month = `0${month}`;
+    }
+
+    let date = now.getDate();
+
+    if (date < 10) {
+        date = `0${date}`;
+    }
+
+    let hours = now.getHours();
+    if (hours < 10) {
+        hours = `0${hours}`;
+    }
+    let minutes = now.getMinutes();
+    if (minutes < 10) {
+        minutes = `0${minutes}`;
+    }
+    dataDay.innerHTML = `Официальный курс, устанавливаемый Национальным банком Республики Беларусь на ${date}.${month}.${year}`;
+    timeSync.innerHTML = `Последнее обновление в ${hours}:${minutes}`;
+
+
+}
 
 }
 
