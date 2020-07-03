@@ -4,9 +4,9 @@ document.addEventListener("DOMContentLoaded", onPageLoaded);
 
 const MAIN_CUR = 'byn';
 
-const activeRates = [MAIN_CUR, 'usd','eur','pln'];
+const activeRates = [MAIN_CUR, 'usd','eur','pln', 'rub'];
 
-const rates = {};
+const ratesStorage = {};
 
 
 function onPageLoaded() {
@@ -23,11 +23,12 @@ function onPageLoaded() {
                 let currencyQuantity = item.quantity;
 
                 if (activeRates.indexOf(currencyCode) !== -1) {
-                    rates[currencyCode] = currencyRate / currencyQuantity;
+                    ratesStorage[currencyCode] = currencyRate / currencyQuantity;
                 }
 
             });
 
+            createCurInputs();
             onReady();
 
         })
@@ -49,6 +50,29 @@ function onFail() {
     }
 }
 
+function createCurInputs() {
+
+
+
+    for (let i = 0; i < activeRates.length; i++) {
+
+        let currencyCode = activeRates[i];
+        let template = `<div class="inputs-item">
+            <label class="item-currency-title" for="nbrb_${currencyCode}">${currencyCode}</label>
+            <input type="tel" id="nbrb_${currencyCode}" name="${currencyCode}" value="" class="input-form">
+        </div>`;
+        let containerInput = document.querySelector('#curr-inputs-container');
+        containerInput.insertAdjacentHTML('afterbegin', `${template}`)
+    }
+
+
+
+
+
+
+
+}
+
 function onReady() {
 
     let containerInputs = document.querySelector('.container-converter-inputs');
@@ -64,7 +88,7 @@ function onReady() {
             let BYN_VALUE = 0;
             if (CURRENT_CURRENCY !== MAIN_CUR) {
                 //ЕСЛИ ТЕКУЩАЯ ВАЛЮТА НЕ БЕЛ РУБЛИ
-                BYN_VALUE = CURRENT_AMOUNT * rates[CURRENT_CURRENCY];
+                BYN_VALUE = CURRENT_AMOUNT * ratesStorage[CURRENT_CURRENCY];
                 inputBYN.value = BYN_VALUE.toFixed(2);
 
             } else {
@@ -75,7 +99,7 @@ function onReady() {
             let inputsArr = document.querySelectorAll('.input-form');
             for (let input of inputsArr) {
                 if (input.name !== MAIN_CUR && input.name !== CURRENT_CURRENCY) {
-                    let amount = BYN_VALUE / rates[input.name];
+                    let amount = BYN_VALUE / ratesStorage[input.name];
                     input.value = amount.toFixed(2);
                 }
             }
