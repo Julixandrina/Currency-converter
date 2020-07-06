@@ -64,17 +64,8 @@ function createCurInputs() {
         let containerInput = document.querySelector('#curr-inputs-container');
         containerInput.insertAdjacentHTML('beforeend', `${template}`)
     }
-
-
-
-
-
-
-
 }
-
 function onReady() {
-
     let containerInputs = document.querySelector('.container-converter-inputs');
     containerInputs.addEventListener('input', function (event) {
         let target = event.target;
@@ -83,8 +74,6 @@ function onReady() {
             let CURRENT_AMOUNT = +target.value;//50
             let topParent = target.closest('.container-converter-inputs');
             let inputBYN = topParent.querySelector('#nbrb_byn');
-
-
             let BYN_VALUE = 0;
             if (CURRENT_CURRENCY !== MAIN_CUR) {
                 //ЕСЛИ ТЕКУЩАЯ ВАЛЮТА НЕ БЕЛ РУБЛИ
@@ -103,15 +92,10 @@ function onReady() {
                     input.value = amount.toFixed(2);
                 }
             }
-
-
-
-
         }
     });
 
     let usdInput = document.getElementById('nbrb_usd');
-
     usdInput.value = 100;
     let event = new Event('input', {
         bubbles: true,
@@ -147,9 +131,7 @@ function showDate() {
     dataDay.innerHTML = `Официальный курс, устанавливаемый Национальным банком Республики Беларусь на ${date}.${month}.${year}`;
     timeSync.innerHTML = `Последнее обновление в ${hours}:${minutes}`;
 
-
 }
-
 }
 
 
