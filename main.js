@@ -91,6 +91,9 @@ function onReady() {
                     let amount = BYN_VALUE / ratesStorage[input.name];
                     input.value = amount.toFixed(2);
                 }
+                input.addEventListener('focus', function (event) {
+                    event.target.select();
+                })
             }
         }
     });
