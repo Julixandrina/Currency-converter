@@ -43,6 +43,7 @@ body .container .container-converter-inputs .inputs-item .input-form:focus {
 }
 body .container .dataSync {
   color: white;
+  font-size: 14px;
 }
 body .container .fault {
   color: #c71c1c;
