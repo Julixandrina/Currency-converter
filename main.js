@@ -62,7 +62,7 @@ function createCurInputs() {
             <input type="tel" id="nbrb_${currencyCode}" name="${currencyCode}" value="" class="input-form">
         </div>`;
         let containerInput = document.querySelector('#curr-inputs-container');
-        containerInput.insertAdjacentHTML('afterbegin', `${template}`)
+        containerInput.insertAdjacentHTML('beforeend', `${template}`)
     }
 
 
