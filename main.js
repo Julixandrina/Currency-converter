@@ -68,6 +68,11 @@ function createCurInputs() {
 function onReady() {
     let containerInputs = document.querySelector('.container-converter-inputs');
     containerInputs.addEventListener('input', function (event) {
+        console.log(event.data);
+        if(event.data){
+
+
+        }
         let target = event.target;
         if(target.classList.contains('input-form')){
             let CURRENT_CURRENCY = target.name;//'usd','eur', 'aud', 'byn'
@@ -91,22 +96,23 @@ function onReady() {
                     let amount = BYN_VALUE / ratesStorage[input.name];
                     input.value = amount.toFixed(2);
                 }
-                /*input.addEventListener('focus', function (event) {
-                    event.target.select();
-                })*/
+
             }
-            /*let labelsForAllInput = document.querySelectorAll('.item-currency-title[for]');
-            for (let label of labelsForAllInput) {
-                label.addEventListener('click', function (event) {
 
-
-                    console.log(event.target.attributes,  event.target.nextElementSibling);
-
-                })
-
-            }*/
         }
     });
+
+    let labelsForAllInput = document.querySelectorAll('.item-currency-title[for]');
+    for (let label of labelsForAllInput) {
+        label.addEventListener('click', function (event) {
+            let valueLabel = event.target.getAttribute('for');
+            let siblingLabel = event.target.nextElementSibling;
+            let siblingIdValue = siblingLabel.getAttribute('id');
+            if (valueLabel === siblingIdValue) {
+                siblingLabel.select();
+            }
+        })
+    }
 
     let usdInput = document.getElementById('nbrb_usd');
     usdInput.value = 100;
