@@ -157,6 +157,8 @@ function showDate() {
     timeSync.innerHTML = `Последнее обновление в ${hours}:${minutes}`;
 
 }
+
+
 }
 
 
