@@ -91,10 +91,20 @@ function onReady() {
                     let amount = BYN_VALUE / ratesStorage[input.name];
                     input.value = amount.toFixed(2);
                 }
-                input.addEventListener('focus', function (event) {
+                /*input.addEventListener('focus', function (event) {
                     event.target.select();
-                })
+                })*/
             }
+            /*let labelsForAllInput = document.querySelectorAll('.item-currency-title[for]');
+            for (let label of labelsForAllInput) {
+                label.addEventListener('click', function (event) {
+
+
+                    console.log(event.target.attributes,  event.target.nextElementSibling);
+
+                })
+
+            }*/
         }
     });
 
