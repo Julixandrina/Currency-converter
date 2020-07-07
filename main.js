@@ -67,11 +67,17 @@ function createCurInputs() {
 }
 function onReady() {
     let containerInputs = document.querySelector('.container-converter-inputs');
+
+    containerInputs.addEventListener('keypress', function (event) {
+        if (isNaN(event.key) && event.code !== 'Period') {
+            event.preventDefault();
+            return false;
+        }
+    });
     containerInputs.addEventListener('input', function (event) {
-        console.log(event.data);
-        if(event.data){
-
-
+        if (typeof event.data !== 'undefined' && isNaN(event.data)) {
+            event.preventDefault();
+            return false;
         }
         let target = event.target;
         if(target.classList.contains('input-form')){
