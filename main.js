@@ -8,6 +8,7 @@ const activeRates = [MAIN_CUR, 'usd','eur','pln', 'rub'];
 
 const ratesStorage = {};
 
+const pageStarted = (new Date()).getTime();
 
 function onPageLoaded() {
     let ratesURL = 'https://ibapi.alfabank.by:8273/partner/1.0.1/public/nationalRates';
@@ -29,6 +30,7 @@ function onPageLoaded() {
             });
 
             createCurInputs();
+
             onReady();
 
         })
@@ -36,7 +38,25 @@ function onPageLoaded() {
             onFail()
         });
 }
+function hidePreloader() {
+    let preload = document.querySelector('.preloader');
 
+    preload.addEventListener('transitionend', function() {
+        preload.remove();//classList.add('d_none');
+    });
+
+    const minimumTime = 1500;
+    const timeSpent = (new Date()).getTime() - pageStarted;
+
+    if(timeSpent < minimumTime) {
+        window.setTimeout(function () {
+            preload.classList.add('hidden');
+        }, minimumTime - timeSpent);
+    } else {
+        preload.classList.add('hidden');
+    }
+
+}
 function onFail() {
     let fault = document.querySelector('.fault');
     fault.style.display = 'block';
@@ -48,6 +68,8 @@ function onFail() {
     for (let input of allInputs) {
         input.setAttribute('disabled', 'disabled');
     }
+
+    hidePreloader()
 }
 
 function createCurInputs() {
@@ -66,19 +88,29 @@ function createCurInputs() {
     }
 }
 function onReady() {
+
     let containerInputs = document.querySelector('.container-converter-inputs');
 
-    containerInputs.addEventListener('keypress', function (event) {
-        if (isNaN(event.key) && event.code !== 'Period') {
+    containerInputs.addEventListener('keydown', function (event) {
+
+
+        if (isNaN(event.key) && event.code !== 'Period' && event.code !== 'Backspace' && event.code !== 'Comma') {
             event.preventDefault();
             return false;
         }
+
+
     });
     containerInputs.addEventListener('input', function (event) {
-        if (typeof event.data !== 'undefined' && isNaN(event.data)) {
+
+        if (typeof event.data !== 'undefined' && isNaN(event.data) && event.code !== 'Comma') {
             event.preventDefault();
             return false;
         }
+
+
+
+
         let target = event.target;
         if(target.classList.contains('input-form')){
             let CURRENT_CURRENCY = target.name;//'usd','eur', 'aud', 'byn'
@@ -156,12 +188,8 @@ function showDate() {
     dataDay.innerHTML = `Официальный курс, устанавливаемый Национальным банком Республики Беларусь на ${date}.${month}.${year}`;
     timeSync.innerHTML = `Последнее обновление в ${hours}:${minutes}`;
 
+    hidePreloader();
 }
 
 
 }
-
-
-
-
-

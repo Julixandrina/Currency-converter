@@ -3,6 +3,7 @@ body {
   line-height: 1.5;
   color: #232222;
   background-color: #b6b6e4;
+
   .container {
     max-width: 400px;
     min-width: 220px;
@@ -56,5 +57,41 @@ body {
     }
   }
 }
+
+@import "preloader";
+
+.preloader {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: #b6b6e4;
+  z-index: 1001;
+  opacity: 1;
+  transition: opacity 500ms;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .lds-roller {
+
+    div:after {
+      background: #6540ca;
+    }
+  }
+
+}
+.hidden {
+  opacity: 0;
+
+}
+.preloader.hidden.d_none {
+  display: none;
+}
+
+
+
+
 
 
