@@ -178,7 +178,7 @@ function onReady() {
         if (minutes < 10) {
             minutes = `0${minutes}`;
         }
-        dataDay.innerHTML = `Официальный курс, устанавливаемый Национальным банком Республики Беларусь на ${date}.${month}.${year}`;
+        dataDay.innerHTML = `Курс НБРБ на ${date}.${month}.${year}`;
         timeSync.innerHTML = `Последнее обновление в ${hours}:${minutes}`;
 
         hidePreloader();
