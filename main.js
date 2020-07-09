@@ -101,8 +101,14 @@ function onReady() {
         let target = event.target;
         if (target.classList.contains('input-form')) {
             let CURRENT_CURRENCY = target.name;//'usd','eur', 'aud', 'byn'
-            target.value = target.value.toString().replace(/,/g, ".");
-            let CURRENT_AMOUNT = +target.value;
+            let inputValue = target.value;
+            inputValue = inputValue.toString().replace(/,/g, ".");
+            inputValue = inputValue.replace(/[^\.0-9]+/g, "");
+
+            let CURRENT_AMOUNT = +inputValue;
+            if (isNaN(CURRENT_AMOUNT)) {
+                CURRENT_AMOUNT = 0;
+            }
             let topParent = target.closest('.container-converter-inputs');
             let inputBYN = topParent.querySelector('#nbrb_byn');
             let BYN_VALUE = 0;
