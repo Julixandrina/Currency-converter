@@ -88,7 +88,7 @@ function createCurInputs() {
 function onReady() {
     let containerInputs = document.querySelector('.container-converter-inputs');
     containerInputs.addEventListener('keydown', function (event) {
-        if (isNaN(event.key) && event.key !== '.' && event.key !== 'Backspace' && event.key !== ',') {
+        if (isNaN(event.key) && event.key !== '.' && event.key !== 'Backspace' && event.key !== ',' && event.code !== 'NumpadDecimal') {
             event.preventDefault();
             return false;
         }
