@@ -42,7 +42,7 @@ function hidePreloader() {
     let preload = document.querySelector('.preloader');
 
     preload.addEventListener('transitionend', function() {
-        preload.remove();//classList.add('d_none');
+        preload.remove();
     });
 
     const minimumTime = 1500;
@@ -94,7 +94,7 @@ function onReady() {
     containerInputs.addEventListener('keydown', function (event) {
 
 
-        if (isNaN(event.key) && event.code !== 'Period' && event.code !== 'Backspace' && event.code !== 'Comma') {
+        if (isNaN(event.key) && event.key !== '.' && event.key !== 'Backspace') {
             event.preventDefault();
             return false;
         }
@@ -103,7 +103,7 @@ function onReady() {
     });
     containerInputs.addEventListener('input', function (event) {
 
-        if (typeof event.data !== 'undefined' && isNaN(event.data) && event.code !== 'Comma') {
+        if (typeof event.data !== 'undefined' && isNaN(event.data)) {
             event.preventDefault();
             return false;
         }
